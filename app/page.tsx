@@ -1,11 +1,7 @@
 /** @format */
 
-import Image from 'next/image';
-
+import Link from 'next/link';
+import { permanentRedirect } from 'next/navigation';
 export default function Home() {
-	return (
-		<div>
-			<h1>MAIN PAGE</h1>
-		</div>
-	);
+	permanentRedirect('./dashboard');
 }

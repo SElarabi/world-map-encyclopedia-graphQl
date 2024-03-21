@@ -9,7 +9,11 @@ const config: Config = {
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				display: 'Oswald, ui-serif', // Adds a new `font-display` class
+			},
+		},
 	},
 	plugins: [],
 };
