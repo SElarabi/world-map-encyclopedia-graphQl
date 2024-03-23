@@ -9,9 +9,21 @@ import {
 	gql,
 } from '@apollo/client';
 
+import React, { useState } from 'react';
+
 export const client = new ApolloClient({
 	uri: '/api/graphql',
 	cache: new InMemoryCache(),
+});
+client.query({
+	query: gql`
+		query getListOfCountries {
+			countries {
+				area
+				capital
+			}
+		}
+	`,
 });
 
 export default function GraphQlClientProvider({

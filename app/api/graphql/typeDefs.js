@@ -26,6 +26,7 @@ export const typeDefs = graphql`
   languages:JSON
   currencies:JSON
   fifa:String
+  googleMaps:String
   
 
 	}

@@ -8,7 +8,17 @@ export const GET_COUNTRIES = gql`
 			countries {
 				name {
 					common
-				}
-			}
+      official
+      nativeName
+    }
+    capital
+    region
+    subregion
+    flag
+    population
+    currencies
+    languages
+    fifa
+  }
 		}
 	`;
