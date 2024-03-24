@@ -7,24 +7,30 @@ import { SelectedCountryContext } from './selectedCountry';
 
 export function GetAllCountries() {
 	const { loading, error, data } = useQuery(GET_COUNTRIES);
+
 	let { selectedCountry, setSelectedCountry } = useContext(
 		SelectedCountryContext
 	);
 	const [country, setCountry] = useState(selectedCountry);
+	const [inputValue, setInputValue] = React.useState('');
 
 	useEffect(() => {
 		setCountry(selectedCountry);
 	}, [selectedCountry]);
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		event.preventDefault();
+		setInputValue(event.target.value);
+	};
 
-	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
 
 		const selectedCountry = data.countries.find(
 			(country: any) => country.name.common === event.target.value
 		);
 		if (selectedCountry) {
-			setSelectedCountry(country);
-			setCountry(country);
+			setSelectedCountry(selectedCountry);
+			setCountry(selectedCountry);
 			console.log('selectedCountry selectionList :', selectedCountry);
 		}
 	};
@@ -33,21 +39,31 @@ export function GetAllCountries() {
 
 	return (
 		<div className='bg-teal-300'>
-			<select
-				className='form-select'
-				aria-label='Select Country'
-				onChange={handleChange}
-			>
-				<option>Select Country</option>
-				{data.countries.map((country: any, index: number) => (
-					<option
-						key={index}
-						value={country.name.common}
-					>
-						{country.name.common}
-					</option>
-				))}
-			</select>
+			<form onSubmit={handleSubmit}>
+				<input
+					list='countries'
+					className='form-select'
+					aria-label='Select Country'
+					onChange={handleSubmit}
+				/>
+				<datalist id='countries'>
+					{/* create a copy of the array before sorting it to avoid The error message
+				"Cannot assign to read only property '0' of object '[object Array*/}
+					{[...data.countries]
+						.sort((a: any, b: any) => a.name.common.localeCompare(b.name.common))
+						.map((country: any, index: number) => (
+							<option
+								key={index}
+								value={country.name.common}
+							>
+								{country.name.common}
+							</option>
+						))}
+				</datalist>
+			</form>
 		</div>
+		//
 	);
+}
+{
 }

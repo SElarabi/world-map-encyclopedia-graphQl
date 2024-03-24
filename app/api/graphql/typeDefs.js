@@ -26,10 +26,26 @@ export const typeDefs = graphql`
   languages:JSON
   currencies:JSON
   fifa:String
-  googleMaps:String
+  maps:Maps
+  coatOfArms:CoatOfArms
+  flags:Flags
+  }
+  #Maps
+  type Maps{
+    googleMaps:String
+  }
   
 
-	}
+  #CoatOfArms
+  type CoatOfArms{
+    svg:String
+    png:String
+  }
+  #Flags
+  type Flags{
+    svg:String
+  }
+
 
   #Name
    type Name{
@@ -37,6 +53,7 @@ export const typeDefs = graphql`
    official:String
    nativeName:JSON
    }
+   
    
    #USE SCALAR JSON TO ADD NOT A CONSISTENT TYPE OF DATA
   scalar JSON

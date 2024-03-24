@@ -1,122 +1,154 @@
 /** @format */
 'use client';
-// import Image from 'next/image';
-// import { ListGroupItem, ListGroup } from 'reactstrap';
+import Image from 'next/image';
+import { ListGroupItem, ListGroup } from 'reactstrap';
 import React, { useState, useContext, useEffect } from 'react';
-import CountryInfo from '../ui/dashboard/countryInfo';
-import { useQuery, gql } from '@apollo/client';
+
 import { SelectedCountryContext } from '../ui/dashboard/selectedCountry';
-import { GET_COUNTRIES } from '@/app/lib/queries';
+
 export default function Page() {
-	const { loading, error, data } = useQuery(GET_COUNTRIES);
-	const { selectedCountry } = useContext(SelectedCountryContext);
+	const { selectedCountry, defaultCountry } = useContext(SelectedCountryContext);
 	const [country, setCountry] = useState(selectedCountry);
+	const [mapRef, setMapRef] = useState(defaultCountry.maps.googleMaps);
 
-	console.log('selectedCountry selectionList :', country);
+	useEffect(() => {
+		console.log('selectedCountry page :', selectedCountry.name.common);
+		setMapRef(selectedCountry.maps.googleMaps);
+		setCountry(selectedCountry);
+		console.log('${country.googleMaps} :', selectedCountry.maps.googleMaps);
+		console.log('country native name :', selectedCountry.name.nativeName);
+	}, [selectedCountry]);
 
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error : {error.message}</p>;
+	let languagesMapping = new Map<string, string>();
+	if (country.languages) {
+		Object.entries(country.languages).forEach(([key, value]) => {
+			languagesMapping.set(key, value);
+		});
+	}
+
+	let currenciesMapping = new Map<string, string>();
+	if (country.currencies) {
+		Object.entries(country.currencies).forEach(([key, value]) => {
+			currenciesMapping.set(key, value);
+		});
+	}
+	let nativeNamesMapping = new Map<string, string>();
+	let nativeNamesArray = [String()];
+	if (country.name.nativeName) {
+		Object.entries(country.name.nativeName).forEach(([key, value]) => {
+			nativeNamesMapping.set(key, value);
+			nativeNamesArray = Array.from(nativeNamesMapping.values());
+			console.log(
+				'First element:',
+				nativeNamesArray[0]?.common,
+				nativeNamesArray[0]?.official
+			);
+		});
+	}
+
 	return (
-		<div>
-			<CountryInfo />
+		<div className=' container size-max flex  flex-col w-[100%] h-svh px-1   md:px-2 '>
+			{country ? (
+				<div className=' grid grid-cols-4 h-svh grid-flow-row-dense   gap-4 p-3 '>
+					{/* title official name and native  */}
+					<div className='shadow-2xl  col-span-4 flex-row items-center text-center '>
+						<div>
+							<h1 className='display-6 '>{country.name.official}</h1>
+						</div>
+						<div>
+							<h1 className='display-6 '>{nativeNamesArray[0]?.official}</h1>
+						</div>
+					</div>
+					{/* Infos and details */}
+					<div className=' flex flex-col row-span-12 col-span-4  '>
+						{/* flg */}
+						<div className='  grid grid-row-2 grid-flow-col place-content-center text-center '>
+							<div className='grid    bg-amber-200'>
+								<img
+									className='shadow-2xl border-2 '
+									src={
+										country && country.flags && country.flags.svg
+											? `${selectedCountry.flags.svg}`
+											: `${defaultCountry.flags.svg}`
+									}
+									width={300}
+									height={300}
+									alt='National flag'
+								/>
+							</div>
+						</div>
+
+						{/* common name and coatOfArmy */}
+						<div className='flex justify-center items-center  col-span-4 p-2'>
+							<img
+								src={
+									country && country.coatOfArms && country.coatOfArms.svg
+										? `${selectedCountry.coatOfArms.svg}`
+										: `${defaultCountry.coatOfArms.svg}`
+								}
+								width={150}
+								height={150}
+								alt='Coat of Arms'
+							/>
+							<h1 className='display-6 ml-4'>
+								{country.name.common}
+								{country.flag}
+								{nativeNamesArray[0]?.common}
+							</h1>
+						</div>
+
+						{/* country IFOS */}
+						<div className=' text-center p-2  '>
+							<ListGroup className='fs-5'>
+								<ListGroupItem>Capital:{country.capital}</ListGroupItem>
+								<ListGroupItem>
+									Population {`👨‍👨‍👧‍👦 `}
+									{country.population.toLocaleString()}
+								</ListGroupItem>
+								<ListGroupItem>
+									<p>LANGUAGES {`🗣`} </p>
+									<ul>
+										{Array.from(languagesMapping).map(([key, value], index) => (
+											<li key={index}>
+												{value} : {key}
+											</li>
+										))}
+									</ul>
+								</ListGroupItem>
+								<ListGroupItem>
+									<p>Currencies {`🪙`}</p>
+									<ul>
+										{Array.from(currenciesMapping).map(([key, Currency], index) => (
+											<li key={index}>
+												{key} : {Currency.name} {'" '} {Currency.symbol}
+												{' "'}
+											</li>
+										))}
+									</ul>
+								</ListGroupItem>
+								<ListGroupItem>
+									Continent
+									{` 🌏 `} {country.region}
+								</ListGroupItem>
+								<ListGroupItem>
+									Subregion {` 🗺 `}
+									{country.subregion}
+									{` 🌐 `}
+									<a
+										className="text-black after:content-['_↗']  hover:bg-sky-700"
+										href={country.maps.googleMaps}
+										target='_blank'
+									>
+										{country.flag} {country.name.common} {` 🗺 `}
+									</a>
+								</ListGroupItem>
+							</ListGroup>
+						</div>
+					</div>
+				</div>
+			) : (
+				<></>
+			)}
 		</div>
 	);
 }
-// let country = selectedCountry;
-// let languagesMapping = new Map<string, string>();
-
-// if (country.languages) {
-// 	Object.entries(country.languages).forEach(([key, value]) => {
-// 		languagesMapping.set(key, value);
-// 	});
-// }
-// if (!selectedCountry) {
-// 	return <p>No country selected</p>;
-// }
-
-// <div className=' container size-max flex  flex-col w-[100%] h-svh px-1 py-4  md:px-2 bg-green-300'>
-// 	{!country.name.common ? (
-// 		<div className='grid grid-cols-4 h-full grid-flow-row-dense   gap-4 p-3 '>
-// 			{/* title official name and native  */}
-// 			<div className='bg-sky-600  col-span-4 flex  items-center justify-center '>
-// 				<h1 className='display-4 underline'>{country.name.official}</h1>
-// 			</div>
-// 			{/* Infos and details */}
-// 			<div className=' flex flex-col row-span-12 col-span-4  p-3'>
-// 				<div className=' grid grid-row-2    p-3 gap-2 place-content-center text-center'>
-// 					<Image
-// 						src='https://flagcdn.com/ma.svg'
-// 						width={300}
-// 						height={300}
-// 						alt='National flag'
-// 					/>
-// 					{/* </div> */}
-// 					<h1 className='display-4'>{country.name.common}</h1>
-// 				</div>
-
-// 				{/* </div> */}
-// 				<div className=' flex flex-col-4 h-full'>
-// 					{/* coatOfArms */}
-// 					<div className=' row-span-6 '>
-// 						<div className='    p-3 gap-2 place-content-center '>
-// 							{/* <div className='grid   basis-1/4 bg-amber-200'> */}
-// 							<Image
-// 								src=' https://mainfacts.com/media/images/coats_of_arms/ma.svg'
-// 								width={150}
-// 								height={150}
-// 								alt='coatOfArms'
-// 							/>
-// 							{/* </div> */}
-// 						</div>
-// 					</div>
-// 					{/* country IFOS */}
-// 					<div className='container flex flex-row-2 flex-col  p-8 gap-8 indent-8'>
-// 						{/* <div className='bg-black text-white p-4 '> */}
-// 						<ListGroup className='fs-5'>
-// 							<ListGroupItem>Capital :{country.capital}</ListGroupItem>
-// 							<ListGroupItem>Population :{country.population}</ListGroupItem>
-// 							<ListGroupItem>
-// 								<p>LANGUAGES :</p>
-// 								<ul>
-// 									{/* Convert object to array of key-value pairs */}
-// 									{Array.from(languagesMapping).map(([key, value], index) => (
-// 										<li key={index}>
-// 											{key} : {value}
-// 										</li>
-// 									))}
-// 								</ul>
-// 							</ListGroupItem>
-// 							<ListGroupItem>
-// 								<p>Currencies</p>
-// 								<ul>
-// 									<li>
-// 										{country.currencies.map((currency, index) => (
-// 											<div key={index}>
-// 												{currency.name} : ({currency.symbol})
-// 											</div>
-// 										))}
-// 									</li>
-// 								</ul>
-// 							</ListGroupItem>
-// 							<ListGroupItem>Region : {country.region}</ListGroupItem>
-// 							<ListGroupItem>
-// 								Subregion :{country.subregion} {' :: '}
-// 								<a
-// 									className="text-black after:content-['_↗']  hover:bg-sky-700"
-// 									href={country.googleMaps}
-// 									target='_blank'
-// 								>
-// 									{country.flag} {country.name.common} {'  '} googleMaps{' '}
-// 								</a>
-// 							</ListGroupItem>
-// 						</ListGroup>
-// 						{/* </div> */}
-// 						{/* <div className='bg-orange-400 h-full'>04</div> */}
-// 					</div>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	) : (
-// 		<></>
-// 	)}
-// </div>

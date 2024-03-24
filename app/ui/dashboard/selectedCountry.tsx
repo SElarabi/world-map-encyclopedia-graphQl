@@ -5,35 +5,38 @@ import { createContext, useContext, useState } from 'react';
 // # country
 type country = {
 	name: Name;
-	capital: String;
-	region: String;
-	subregion: String;
-	flag: String;
+	capital: string;
+	region: string;
+	subregion: string;
+	flag: string;
 	population: number;
-	languages: { [key: string]: string }; // Object with string keys and string values
-	currencies: Currency[]; // Object with string keys and string values
-	fifa: String;
-	googleMaps: string;
+	languages: { [key: string]: String }; // Object with string keys and string values
+	currencies: { [key: string]: Currency }; // Object with string keys and string
+	fifa: string;
+	maps: { [googleMaps: string]: string }; // Object with string keys and string values
+
+	coatOfArms: { [key: string]: string }; // Object with string keys and string values
+	flags: { [key: string]: string }; // Object with string keys and string values
 };
 // #Currency
 type Currency = {
-	name: string;
-	symbol: string;
+	name: String;
+	symbol: String;
 };
 // #Name
 type Name = {
-	common: String;
-	official: String;
+	common: string;
+	official: string;
 	nativeName: { [key: string]: string }; // Object with string keys and string values,
 };
 
 let defaultName: Name = {
-	common: '',
-	official: '',
+	common: 'UN',
+	official: 'United Nations',
 	nativeName: {},
 };
 
-let defaultCountry: country = {
+const defaultCountry: country = {
 	name: defaultName,
 	capital: '',
 	region: '',
@@ -41,17 +44,29 @@ let defaultCountry: country = {
 	flag: '',
 	population: 0,
 	languages: {},
-	currencies: [{ name: '', symbol: '' }],
+	currencies: {},
 	fifa: '',
-	googleMaps: '',
+	maps: {
+		googleMaps:
+			'https://commons.wikimedia.org/wiki/Category:Headquarters_of_the_United_Nations#/map/0/15/40.7502/-73.9672',
+	},
+
+	coatOfArms: {
+		svg: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/UN_emblem_blue.svg',
+	},
+	flags: {
+		svg: 'https://upload.wikimedia.org/wikipedia/commons/8/87/UN_emblem_gold.svg',
+	},
 };
 
 export const SelectedCountryContext = createContext<{
 	selectedCountry: country;
 	setSelectedCountry: React.Dispatch<React.SetStateAction<country>>;
+	defaultCountry: country;
 }>({
 	selectedCountry: defaultCountry,
 	setSelectedCountry: () => {},
+	defaultCountry: defaultCountry,
 });
 
 export function SelectedCountryProvider({
@@ -63,7 +78,7 @@ export function SelectedCountryProvider({
 
 	return (
 		<SelectedCountryContext.Provider
-			value={{ selectedCountry, setSelectedCountry }}
+			value={{ selectedCountry, setSelectedCountry, defaultCountry }}
 		>
 			{children}
 		</SelectedCountryContext.Provider>
