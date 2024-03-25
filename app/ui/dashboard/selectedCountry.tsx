@@ -17,6 +17,7 @@ type country = {
 
 	coatOfArms: { [key: string]: string }; // Object with string keys and string values
 	flags: { [key: string]: string }; // Object with string keys and string values
+	unMember: Boolean;
 };
 // #Currency
 type Currency = {
@@ -57,6 +58,7 @@ const defaultCountry: country = {
 	flags: {
 		svg: 'https://upload.wikimedia.org/wikipedia/commons/8/87/UN_emblem_gold.svg',
 	},
+	unMember: true,
 };
 
 export const SelectedCountryContext = createContext<{

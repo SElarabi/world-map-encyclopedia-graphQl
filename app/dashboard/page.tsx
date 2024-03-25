@@ -1,22 +1,38 @@
 /** @format */
 'use client';
-import Image from 'next/image';
+
 import { ListGroupItem, ListGroup } from 'reactstrap';
 import React, { useState, useContext, useEffect } from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHelmetUn } from '@fortawesome/free-solid-svg-icons';
 import { SelectedCountryContext } from '../ui/dashboard/selectedCountry';
-
 export default function Page() {
 	const { selectedCountry, defaultCountry } = useContext(SelectedCountryContext);
 	const [country, setCountry] = useState(selectedCountry);
 	const [mapRef, setMapRef] = useState(defaultCountry.maps.googleMaps);
+	const [isSmallViewport, setIsSmallViewport] = useState(
+		typeof window !== 'undefined' ? window.innerWidth <= 640 : false
+	);
+	// window viewport
+	useEffect(() => {
+		const handleResize = () => {
+			setIsSmallViewport(window.innerWidth <= 640);
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		// Clean up the event listener on component unmount
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [isSmallViewport]);
 
 	useEffect(() => {
 		console.log('selectedCountry page :', selectedCountry.name.common);
 		setMapRef(selectedCountry.maps.googleMaps);
 		setCountry(selectedCountry);
-		console.log('${country.googleMaps} :', selectedCountry.maps.googleMaps);
-		console.log('country native name :', selectedCountry.name.nativeName);
+
+		console.log('unMember :', selectedCountry.unMember);
 	}, [selectedCountry]);
 
 	let languagesMapping = new Map<string, string>();
@@ -47,9 +63,9 @@ export default function Page() {
 	}
 
 	return (
-		<div className=' container size-max flex  flex-col w-[100%] h-dvh px-1   md:px-2 '>
+		<div className=' container size-max flex  flex-col w-[100%]  px-1   md:px-2 '>
 			{country ? (
-				<div className=' grid grid-cols-4 h-svh grid-flow-row-dense   gap-4 p-3 '>
+				<div className=' grid grid-cols-4  grid-flow-row-dense   gap-4 p-3 '>
 					{/* title official name and native  */}
 					<div className='shadow-2xl  col-span-4 flex-row items-center text-center '>
 						<div>
@@ -81,7 +97,7 @@ export default function Page() {
 						</div>
 
 						{/* common name and coatOfArmy */}
-						<div className='flex justify-center items-center  col-span-4 p-2 '>
+						<div className='flex justify-center items-center  col-span-4 pt-6 py-2 '>
 							<img
 								src={
 									country && country.coatOfArms && country.coatOfArms.svg
@@ -100,9 +116,29 @@ export default function Page() {
 						</div>
 
 						{/* country IFOS */}
-						<div className=' text-center p-2  '>
+						<div className='shadow-2xl text-center p-2  '>
 							<ListGroup className='fs-5'>
-								<ListGroupItem>Capital:{country.capital}</ListGroupItem>
+								<ListGroupItem>
+									{country !== defaultCountry
+										? `Capital: ${country.capital} - `
+										: `Headquarter : New York, USA`}
+									{` `}
+									{country.unMember ? (
+										<a
+											className="text-black after:content-['_↗']  hover:bg-sky-700"
+											href='https://www.un.org/en/'
+											// target={!isSmallViewport ? '_blank' : '_self'}
+											target='_blank'
+										>
+											{` `}
+											<FontAwesomeIcon icon={faHelmetUn} />
+
+											{` UN-Member `}
+										</a>
+									) : (
+										``
+									)}
+								</ListGroupItem>
 								<ListGroupItem>
 									Population {`👨‍👨‍👧‍👦 `}
 									{country.population.toLocaleString()}

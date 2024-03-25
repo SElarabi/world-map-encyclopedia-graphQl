@@ -29,6 +29,7 @@ export const typeDefs = graphql`
   maps:Maps
   coatOfArms:CoatOfArms
   flags:Flags
+  unMember:Boolean
   }
   #Maps
   type Maps{

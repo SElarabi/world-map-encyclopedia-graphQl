@@ -28,6 +28,7 @@ export const GET_COUNTRIES = gql`
         flags{
           svg
        }
+       unMember
       }
 		}
 	`;

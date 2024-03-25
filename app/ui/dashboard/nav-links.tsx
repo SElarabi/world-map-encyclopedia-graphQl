@@ -5,16 +5,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {
-	TrophyIcon,
-	HomeIcon,
-	DocumentIcon,
-	ChatBubbleLeftEllipsisIcon,
-	CommandLineIcon,
-	ComputerDesktopIcon,
-	GlobeAltIcon,
-	WrenchScrewdriverIcon,
-} from '@heroicons/react/24/outline';
+import { HomeIcon } from '@heroicons/react/24/outline';
+
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [{ name: 'Home', href: '/dashboard', icon: HomeIcon }];
@@ -22,7 +14,7 @@ const links = [{ name: 'Home', href: '/dashboard', icon: HomeIcon }];
 export default function NavLinks() {
 	const pathname = usePathname();
 	return (
-		<>
+		<div className=' flex flex-row p-8 '>
 			{links.map((link) => {
 				const LinkIcon = link.icon;
 				return (
@@ -41,6 +33,6 @@ export default function NavLinks() {
 					</Link>
 				);
 			})}
-		</>
+		</div>
 	);
 }

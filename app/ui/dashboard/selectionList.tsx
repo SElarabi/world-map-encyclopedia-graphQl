@@ -73,7 +73,7 @@ export function GetAllCountries() {
 	return (
 		<div>
 			{isCheckboxChecked ? (
-				<form>
+				<form id='countryselectform'>
 					<input
 						list='countries'
 						className='form-select'
@@ -86,19 +86,24 @@ export function GetAllCountries() {
 				</form>
 			) : (
 				<select
+					id='selectCountry'
 					className='form-select'
 					aria-label='Select Country'
 					onChange={handleSelectChange}
+					value={selectedCountry.name.common}
 				>
 					{/* create a copy of the array before sorting it to avoid The error message
 				"Cannot assign to read only property '0' of object '[object Array*/}
 
-					<option selected>Select Country</option>
+					<option value={selectedCountry.name.common}>
+						{selectedCountry.name.common}
+					</option>
 					<CountryList />
 				</select>
 			)}
 			{/* checkbox select between list or user entry */}
 			<input
+				id='manualSearch'
 				type='checkbox'
 				className='form-check-label  '
 				onChange={handleCheckboxChange}
@@ -106,7 +111,7 @@ export function GetAllCountries() {
 			{`  `}
 			<label
 				className='form-check-label'
-				htmlFor='flexCheckDefault'
+				htmlFor='manualSearch'
 			>
 				<h1 className='text-sm'>Manual Search</h1>
 			</label>
