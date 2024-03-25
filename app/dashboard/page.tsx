@@ -47,7 +47,7 @@ export default function Page() {
 	}
 
 	return (
-		<div className=' container size-max flex  flex-col w-[100%] h-svh px-1   md:px-2 '>
+		<div className=' container size-max flex  flex-col w-[100%] h-dvh px-1   md:px-2 '>
 			{country ? (
 				<div className=' grid grid-cols-4 h-svh grid-flow-row-dense   gap-4 p-3 '>
 					{/* title official name and native  */}
@@ -55,9 +55,11 @@ export default function Page() {
 						<div>
 							<h1 className='display-6 '>{country.name.official}</h1>
 						</div>
-						<div>
-							<h1 className='display-6 '>{nativeNamesArray[0]?.official}</h1>
-						</div>
+						{nativeNamesArray[0]?.official !== country.name.official && (
+							<div>
+								<h1 className='display-6 '>{nativeNamesArray[0]?.official}</h1>
+							</div>
+						)}
 					</div>
 					{/* Infos and details */}
 					<div className=' flex flex-col row-span-12 col-span-4  '>
@@ -79,7 +81,7 @@ export default function Page() {
 						</div>
 
 						{/* common name and coatOfArmy */}
-						<div className='flex justify-center items-center  col-span-4 p-2'>
+						<div className='flex justify-center items-center  col-span-4 p-2 '>
 							<img
 								src={
 									country && country.coatOfArms && country.coatOfArms.svg
@@ -90,7 +92,7 @@ export default function Page() {
 								height={150}
 								alt='Coat of Arms'
 							/>
-							<h1 className='display-6 ml-4'>
+							<h1 className='display-6 ml-4 bg-none  '>
 								{country.name.common}
 								{country.flag}
 								{nativeNamesArray[0]?.common}

@@ -43,7 +43,7 @@ const defaultCountry: country = {
 	subregion: '',
 	flag: '',
 	population: 0,
-	languages: {},
+	languages: { eng: 'English' },
 	currencies: {},
 	fifa: '',
 	maps: {

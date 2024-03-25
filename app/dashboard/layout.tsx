@@ -14,7 +14,7 @@ export default function DashboardLayout({
 	return (
 		<SelectedCountryProvider>
 			<GraphQlClientProvider>
-				<div className=' flex  flex-col md:flex-row h-svh gap-x-4 '>
+				<div className=' flex  flex-col md:flex-row h-svh gap-x-4 mb-auto'>
 					<div className='w-full flex-none md:w-64 '>
 						<SideNav />
 					</div>
