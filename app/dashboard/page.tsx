@@ -159,9 +159,9 @@ export default function Page() {
 								<ListGroupItem>
 									<p>Currencies {`🪙`}</p>
 									<ul>
-										{Array.from(currenciesMapping).map(([key, Currency], index) => (
+										{Array.from(currenciesMapping).map(([key, currencyString], index) => (
 											<li key={index}>
-												{key} : {Currency.name} {'" '} {Currency.symbol}
+												{key} : {currencyString}
 												{' "'}
 											</li>
 										))}
