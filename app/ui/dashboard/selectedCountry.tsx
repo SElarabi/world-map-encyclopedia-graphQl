@@ -21,8 +21,8 @@ type country = {
 };
 // #Currency
 type Currency = {
-	name: String;
-	symbol: String;
+	name: string;
+	symbol: string;
 };
 // #Name
 type Name = {
