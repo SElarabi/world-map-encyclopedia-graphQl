@@ -38,22 +38,25 @@ export default function Page() {
 	let languagesMapping = new Map<string, string>();
 	if (country.languages) {
 		Object.entries(country.languages).forEach(([key, value]) => {
-			languagesMapping.set(key, value);
+			languagesMapping.set(String(key), String(value));
 		});
 	}
 
 	let currenciesMapping = new Map<string, string>();
 	if (country.currencies) {
 		Object.entries(country.currencies).forEach(([key, value]) => {
-			currenciesMapping.set(key, value);
+			// Access the 'name' and 'symbol' properties directly
+			const currencyString: string = `${value.name} (${value.symbol})`;
+			currenciesMapping.set(key, currencyString);
 		});
 	}
 	let nativeNamesMapping = new Map<string, string>();
-	let nativeNamesArray = [String()];
+	let nativeNamesArray: { common: string; official: string }[] = [];
 	if (country.name.nativeName) {
 		Object.entries(country.name.nativeName).forEach(([key, value]) => {
-			nativeNamesMapping.set(key, value);
-			nativeNamesArray = Array.from(nativeNamesMapping.values());
+			nativeNamesMapping.set(String(key), String(value));
+			// nativeNamesArray = Array.from(nativeNamesMapping.values());
+			nativeNamesArray.push({ common: String(key), official: String(value) });
 			console.log(
 				'First element:',
 				nativeNamesArray[0]?.common,

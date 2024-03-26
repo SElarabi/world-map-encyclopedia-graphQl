@@ -10,7 +10,7 @@ type country = {
 	subregion: string;
 	flag: string;
 	population: number;
-	languages: { [key: string]: String }; // Object with string keys and string values
+	languages: { [key: string]: string }; // Object with string keys and string values
 	currencies: { [key: string]: Currency }; // Object with string keys and string
 	fifa: string;
 	maps: { [googleMaps: string]: string }; // Object with string keys and string values

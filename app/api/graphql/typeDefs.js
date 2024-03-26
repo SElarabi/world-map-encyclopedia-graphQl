@@ -10,22 +10,22 @@ export const typeDefs = graphql`
 	# Queries can fetch a list of libraries
 	type Query {
 	  countries:[Country]
-    coutry(common:string):Country
+    coutry(common:String):Country
 		
 	}
 
 	# Country
 	type Country{
-	area:string
+	area:String
 	name:Name
-	capital:[string]
-	region:string
-  subregion:string
-  flag:string
+	capital:[String]
+	region:String
+  subregion:String
+  flag:String
   population:Int
   languages:JSON
   currencies:JSON
-  fifa:string
+  fifa:String
   maps:Maps
   coatOfArms:CoatOfArms
   flags:Flags
@@ -33,25 +33,25 @@ export const typeDefs = graphql`
   }
   #Maps
   type Maps{
-    googleMaps:string
+    googleMaps:String
   }
   
 
   #CoatOfArms
   type CoatOfArms{
-    svg:string
-    png:string
+    svg:String
+    png:String
   }
   #Flags
   type Flags{
-    svg:string
+    svg:String
   }
 
 
   #Name
    type Name{
-   common:string
-   official:string
+   common:String
+   official:String
    nativeName:JSON
    }
    
