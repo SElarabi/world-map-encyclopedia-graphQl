@@ -167,7 +167,6 @@ export default function Page() {
 										{Array.from(currenciesMapping).map(([key, currencyString], index) => (
 											<li key={index}>
 												{key} : {currencyString}
-												{' "'}
 											</li>
 										))}
 									</ul>
