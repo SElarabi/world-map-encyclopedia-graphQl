@@ -50,19 +50,23 @@ export default function Page() {
 			currenciesMapping.set(key, currencyString);
 		});
 	}
+
 	let nativeNamesMapping = new Map<string, string>();
-	let nativeNamesArray: { common: string; official: string }[] = [];
+	let nativeNamesArray: { official: string; common: string }[] = [];
+
 	if (country.name.nativeName) {
 		Object.entries(country.name.nativeName).forEach(([key, value]) => {
-			nativeNamesMapping.set(String(key), String(value));
-			// nativeNamesArray = Array.from(nativeNamesMapping.values());
-			nativeNamesArray.push({ common: String(key), official: String(value) });
-			console.log(
-				'First element:',
-				nativeNamesArray[0]?.common,
-				nativeNamesArray[0]?.official
-			);
+			if (
+				typeof value === 'object' &&
+				value !== null &&
+				'official' in value &&
+				'common' in value
+			) {
+				nativeNamesMapping.set(key, value);
+				nativeNamesArray.push(value);
+			}
 		});
+		console.log('nativeNamesArray', nativeNamesArray);
 	}
 
 	return (
@@ -77,6 +81,7 @@ export default function Page() {
 						{nativeNamesArray[0]?.official !== country.name.official && (
 							<div>
 								<h1 className='display-6 '>{nativeNamesArray[0]?.official}</h1>
+								<h1 className='display-6 '>{}</h1>
 							</div>
 						)}
 					</div>
@@ -84,7 +89,7 @@ export default function Page() {
 					<div className=' flex flex-col row-span-12 col-span-4  '>
 						{/* flg */}
 						<div className='  grid grid-row-2 grid-flow-col place-content-center text-center '>
-							<div className='grid    bg-amber-200'>
+							<div className='grid   '>
 								<img
 									className='shadow-2xl border-2 '
 									src={
