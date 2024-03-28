@@ -3,7 +3,7 @@ import { RESTDataSource } from '@apollo/datasource-rest';
 
 
 export class AllCountriesAPI extends RESTDataSource {
-  baseURL = 'https://restcountries.com/v3.1/';
+  baseURL = 'https://restcountries.com/v3.1/'; //API 
 
   async getAllCountries () {
 

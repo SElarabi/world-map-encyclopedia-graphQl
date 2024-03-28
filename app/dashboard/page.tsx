@@ -6,6 +6,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHelmetUn } from '@fortawesome/free-solid-svg-icons';
 import { SelectedCountryContext } from '../ui/dashboard/selectedCountry';
+
+import Loading from './ loading';
+
 export default function Page() {
 	const { selectedCountry, defaultCountry } = useContext(SelectedCountryContext);
 	const [country, setCountry] = useState(selectedCountry);
@@ -13,6 +16,7 @@ export default function Page() {
 	const [isSmallViewport, setIsSmallViewport] = useState(
 		typeof window !== 'undefined' ? window.innerWidth <= 640 : false
 	);
+
 	// window viewport
 	useEffect(() => {
 		const handleResize = () => {
@@ -28,11 +32,11 @@ export default function Page() {
 	}, [isSmallViewport]);
 
 	useEffect(() => {
-		console.log('selectedCountry page :', selectedCountry.name.common);
+		// console.log('selectedCountry page :', selectedCountry.name.common);
 		setMapRef(selectedCountry.maps.googleMaps);
 		setCountry(selectedCountry);
 
-		console.log('unMember :', selectedCountry.unMember);
+		// console.log('unMember :', selectedCountry.unMember);
 	}, [selectedCountry]);
 
 	let languagesMapping = new Map<string, string>();
@@ -66,7 +70,7 @@ export default function Page() {
 				nativeNamesArray.push(value);
 			}
 		});
-		console.log('nativeNamesArray', nativeNamesArray);
+		// console.log('nativeNamesArray', nativeNamesArray);
 	}
 
 	return (
@@ -85,6 +89,7 @@ export default function Page() {
 							</div>
 						)}
 					</div>
+
 					{/* Infos and details */}
 					<div className=' flex flex-col row-span-12 col-span-4  '>
 						{/* flg */}
@@ -147,6 +152,7 @@ export default function Page() {
 										``
 									)}
 								</ListGroupItem>
+
 								<ListGroupItem>
 									Population {`👨‍👨‍👧‍👦 `}
 									{country.population.toLocaleString()}
@@ -192,7 +198,7 @@ export default function Page() {
 					</div>
 				</div>
 			) : (
-				<></>
+				<Loading />
 			)}
 		</div>
 	);

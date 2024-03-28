@@ -20,7 +20,7 @@ export const resolvers = {
 			return dataSources.AllCountriesAPI.getAllCountries();
 		},
 		coutry: async ( _, { common }, { dataSources } ) => {
-			console.log( `${ common }`, typeof `${ common }` )
+			// console.log( `${ common }`, typeof `${ common }` )
 			if ( typeof `${ common }` === 'string' && /^[a-zA-Z]+$/.test( common ) ) {
 				return dataSources.AllCountriesAPI.getCountry( `${ common }` )
 			} else {

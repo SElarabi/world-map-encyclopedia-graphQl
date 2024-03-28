@@ -5,24 +5,36 @@ import { useQuery, gql } from '@apollo/client';
 import { GET_COUNTRIES } from '@/app/lib/queries';
 import { SelectedCountryContext } from './selectedCountry';
 
-export function GetAllCountries() {
+export function SelectionList() {
 	const { loading, error, data } = useQuery(GET_COUNTRIES);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-
 	let { selectedCountry, setSelectedCountry } = useContext(
 		SelectedCountryContext
 	);
 	const [country, setCountry] = useState(selectedCountry);
 	const [inputValue, setInputValue] = React.useState('');
+	const [showAlert, setShowAlert] = useState(false);
 
 	useEffect(() => {
 		setCountry(selectedCountry);
 	}, [selectedCountry]);
 
-	const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		setInputValue(event.target.value);
+		const selectedCountry = data.countries.find(
+			(country: any) => country.name.common === inputValue
+		);
+		if (selectedCountry) {
+			setSelectedCountry(selectedCountry);
+			setCountry(selectedCountry);
+			setShowAlert(false);
+		} else {
+			setShowAlert(true);
+		}
+
+		console.log('inputValue :', inputValue);
 	};
+
 	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setIsCheckboxChecked(event.target.checked);
 	};
@@ -47,11 +59,9 @@ export function GetAllCountries() {
 		if (selectedCountry) {
 			setSelectedCountry(selectedCountry);
 			setCountry(selectedCountry);
-			console.log('selectedCountry selectionList :', selectedCountry);
 		}
 	};
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error : {error.message}</p>;
+
 	const CountryList = () => {
 		return (
 			<>
@@ -70,15 +80,25 @@ export function GetAllCountries() {
 			</>
 		);
 	};
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error : {error.message}</p>;
+
 	return (
 		<div>
 			{isCheckboxChecked ? (
-				<form id='countryselectform'>
+				<form
+					id='countryselectform'
+					onSubmit={handleSubmit}
+				>
 					<input
 						list='countries'
 						className='form-select'
 						aria-label='Select Country'
-						onChange={handleChange}
+						onChange={(e) => {
+							handleChange;
+							setInputValue(e.target.value);
+						}}
 					/>
 					<datalist id='countries'>
 						<CountryList />
@@ -115,6 +135,23 @@ export function GetAllCountries() {
 			>
 				<h1 className='text-sm'>Manual Search</h1>
 			</label>
+			{/* Alert  */}
+			{showAlert && (
+				<div
+					className='alert alert-warning alert-dismissible fade show'
+					role='alert'
+				>
+					<strong>Holy guacamole! </strong> You should check in on some of those in
+					the list .Uncheck Manual Search option and explore the list to find the
+					country if it's included..
+					<button
+						type='button'
+						className='btn-close'
+						data-bs-dismiss='alert'
+						aria-label='Close'
+					></button>
+				</div>
+			)}
 		</div>
 
 		//

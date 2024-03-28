@@ -1,13 +1,7 @@
 /** @format */
-
+// Use this provider as client to be used in layout file which is server component, Client provider could not be used directly in server component.
 'use client';
-import {
-	ApolloClient,
-	InMemoryCache,
-	ApolloProvider,
-	useQuery,
-	gql,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 import React, { useState } from 'react';
 
@@ -16,16 +10,6 @@ export const client = new ApolloClient({
 
 	cache: new InMemoryCache(),
 });
-// client.query({
-// 	query: gql`
-// 		query getListOfCountries {
-// 			countries {
-// 				area
-// 				capital
-// 			}
-// 		}
-// 	`,
-// });
 
 export default function GraphQlClientProvider({
 	children,

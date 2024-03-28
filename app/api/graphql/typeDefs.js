@@ -2,9 +2,7 @@
 import graphql from 'graphql-tag';
 
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
+
 export const typeDefs = graphql`
 	
 	# Queries can fetch a list of libraries
@@ -56,7 +54,7 @@ export const typeDefs = graphql`
    }
    
    
-   #USE SCALAR JSON TO ADD NOT A CONSISTENT TYPE OF DATA
+   #SCALAR JSON TO ADD NOT A CONSISTENT TYPE OF DATA
   scalar JSON
   scalar JSONObject
 

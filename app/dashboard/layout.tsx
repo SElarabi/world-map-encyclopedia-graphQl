@@ -2,9 +2,9 @@
 'use client';
 import GraphQlClientProvider from '@/app/dashboard/graphqlClient-provider';
 import SideNav from '../ui/dashboard/sidenav';
-import { SelectedCountryContext } from '../ui/dashboard/selectedCountry';
 import { SelectedCountryProvider } from '../ui/dashboard/selectedCountry';
-import React, { useContext } from 'react';
+import { Suspense } from 'react';
+import Loading from './ loading';
 
 export default function DashboardLayout({
 	children,
@@ -18,7 +18,9 @@ export default function DashboardLayout({
 					<div className='w-full flex-none md:w-64 '>
 						<SideNav />
 					</div>
-					<div className=' w-[100%]  p-4 mb-4'>{children}</div>
+					<Suspense fallback={<Loading />}>
+						<div className=' w-[100%]  p-4 mb-4'>{children}</div>
+					</Suspense>
 				</div>
 			</GraphQlClientProvider>
 		</SelectedCountryProvider>
