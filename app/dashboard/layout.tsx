@@ -14,12 +14,12 @@ export default function DashboardLayout({
 	return (
 		<SelectedCountryProvider>
 			<GraphQlClientProvider>
-				<div className=' flex  flex-col md:flex-row  gap-x-4 mb-auto '>
+				<div className=' flex  flex-col md:flex-row  gap-x-2 mb-auto '>
 					<div className='w-full flex-none md:w-64 '>
 						<SideNav />
 					</div>
 					<Suspense fallback={<Loading />}>
-						<div className=' w-[100%]  p-4 mb-4'>{children}</div>
+						<div className=' w-[100%]  p-2 mb-2'>{children}</div>
 					</Suspense>
 				</div>
 			</GraphQlClientProvider>

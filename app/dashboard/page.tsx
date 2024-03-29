@@ -190,7 +190,7 @@ export default function Page() {
 										href={country.maps.googleMaps}
 										target='_blank'
 									>
-										{country.flag} {country.name.common} {` 🗺 `}
+										{country.flag} {country.name.common} {` 🗺  googleMap`}
 									</a>
 								</ListGroupItem>
 							</ListGroup>
