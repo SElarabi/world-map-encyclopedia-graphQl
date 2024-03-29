@@ -7,67 +7,77 @@ import { SelectedCountryContext } from './selectedCountry';
 
 export function SelectionList() {
 	const { loading, error, data } = useQuery(GET_COUNTRIES);
-	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-	let { selectedCountry, setSelectedCountry } = useContext(
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(false);
+	let { selectedCountry, setSelectedCountry, defaultCountry } = useContext(
 		SelectedCountryContext
 	);
-	const [country, setCountry] = useState(selectedCountry);
-	const [inputValue, setInputValue] = React.useState('');
-	const [showAlert, setShowAlert] = useState(false);
 
+	const [inputValue, setInputValue] = useState<string>('');
+	const [showAlert, setShowAlert] = useState<boolean>(false);
+
+	// first rendering
 	useEffect(() => {
-		setCountry(selectedCountry);
-	}, [selectedCountry]);
+		setShowAlert(false);
+	}, []);
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const selectedCountry = data.countries.find(
-			(country: any) => country.name.common === inputValue
-		);
+	// Autofill option
+	useEffect(() => {
+		const selectedCountry = data?.countries.find((country: any) => {
+			return country.name.common.toLowerCase() === inputValue.toLowerCase();
+		});
+
 		if (selectedCountry) {
 			setSelectedCountry(selectedCountry);
-			setCountry(selectedCountry);
+
 			setShowAlert(false);
-		} else {
-			setShowAlert(true);
 		}
+	}, [inputValue]);
 
-		console.log('inputValue :', inputValue);
-	};
-
+	//checkbox
 	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setIsCheckboxChecked(event.target.checked);
 	};
+
+	//selecting from the list
 	const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		event.preventDefault();
-
-		const selectedCountry = data.countries.find(
+		const selectedCountry = data?.countries.find(
 			(country: any) => country.name.common === event.target.value
 		);
-		if (selectedCountry) {
-			setSelectedCountry(selectedCountry);
-			setCountry(selectedCountry);
-			console.log('selectedCountry selectionList :', selectedCountry);
-		}
+		setSelectedCountry(selectedCountry);
+		setShowAlert(false);
 	};
 
+	//capturing userInput
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
-		const selectedCountry = data.countries.find(
-			(country: any) => country.name.common === event.target.value
-		);
+		//
+		setInputValue(event.target.value);
+	};
+
+	// when using enter key
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const selectedCountry = data.countries.find((country: any) => {
+			return country.name.common.toLowerCase() === inputValue.toLowerCase();
+		});
 		if (selectedCountry) {
 			setSelectedCountry(selectedCountry);
-			setCountry(selectedCountry);
+
+			setShowAlert(false);
+		} else {
+			setSelectedCountry(defaultCountry);
+			setShowAlert(true);
 		}
 	};
 
+	// country list
 	const CountryList = () => {
 		return (
 			<>
 				{/* create a copy of the array before sorting it to avoid The error message
 				"Cannot assign to read only property '0' of object '[object Array*/}
-				{[...data.countries]
+				{[...data?.countries]
 					.sort((a: any, b: any) => a.name.common.localeCompare(b.name.common))
 					.map((country: any, index: number) => (
 						<option
@@ -82,7 +92,7 @@ export function SelectionList() {
 	};
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error : {error.message}</p>;
+	if (error) return <p className='text-slate-950'>Error : {error.message}</p>;
 
 	return (
 		<div>
@@ -95,10 +105,8 @@ export function SelectionList() {
 						list='countries'
 						className='form-select'
 						aria-label='Select Country'
-						onChange={(e) => {
-							handleChange;
-							setInputValue(e.target.value);
-						}}
+						onChange={handleChange}
+						value={inputValue}
 					/>
 					<datalist id='countries'>
 						<CountryList />
@@ -110,13 +118,13 @@ export function SelectionList() {
 					className='form-select'
 					aria-label='Select Country'
 					onChange={handleSelectChange}
-					value={selectedCountry.name.common}
+					value={selectedCountry?.name.common}
 				>
 					{/* create a copy of the array before sorting it to avoid The error message
 				"Cannot assign to read only property '0' of object '[object Array*/}
 
 					<option value={selectedCountry.name.common}>
-						{selectedCountry.name.common}
+						{selectedCountry?.name.common}
 					</option>
 					<CountryList />
 				</select>
@@ -149,6 +157,7 @@ export function SelectionList() {
 						className='btn-close'
 						data-bs-dismiss='alert'
 						aria-label='Close'
+						onClick={() => setShowAlert(false)}
 					></button>
 				</div>
 			)}
@@ -156,6 +165,4 @@ export function SelectionList() {
 
 		//
 	);
-}
-{
 }
