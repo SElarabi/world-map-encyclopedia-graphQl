@@ -1,6 +1,7 @@
 <!-- @format -->
 
-# [world-map-encyclopedia-graphql] (https://world-map-encyclopedia-graphql.vercel.app/dashboard)
+# [world-map-encyclopedia-graphql](https://world-map-encyclopedia-graphql.vercel.app/dashboard)
+# <a href="https://world-map-encyclopedia-graphql.vercel.app/dashboard" target="_blank">world-map-encyclopedia-graphql</a>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -8,28 +9,34 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 This is a NextJs application that displays information about a selected country. The information is fetched from a GraphQL server using the Apollo Client.
 
+
 ## Components
 
 The page consists of the following components:
 
-1. **Features:**
-   . Displays the official and common names of the selected country.
-   . Displays the national flag and coat of arms of the selected country.
-   . Displays various information about the selected country such as:
-   .Capital
-   .Population
-   .Languages
-   .Currencies
-   .Continent
-   .Subregion
-   .Provides a link to the country's location on Google Maps.
-   .Responsive design that adjusts to the viewport size.
+ **Features:**
+   >- Displays the official and common names of the selected country.
+   >- Displays the national flag and coat of arms of the selected country.
+   >- Displays various information about the selected country such as:
+   >- Capital
+   >- Population
+   >- Languages
+   >- Currencies
+   >- Continent
+   >- Subregion
+   >- Provides a link to the country's location on Google Maps.
+   >- Responsive design that adjusts to the viewport size.
 
 ## Usage
+>- Minimum requirement:
+>- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). canary package.
+> - npm 10.2.4.
+> - node v21.5.0
 
-To use this page:
+ 
+To use this project:
 
-1. Ensure you have the necessary dependencies installed (React, Reactstrap, FontAwesome, etc.).
+1. Ensure you have the necessary dependencies installed (React, Reactstrap, FontAwesome, etc.).use `npm install` to install all dependencies listed in the package.json file.
 2. Include the provided React component in your project.
 3. Pass the selected country object and default country object to the component through context.
 4. The component will fetch additional country data using Apollo Client.
@@ -39,10 +46,18 @@ To use this page:
 
 ## Dependencies
 
-- reactstrap: Used for various UI components.
-- react: The library this component is built with.
-- @fortawesome/react-fontawesome and @fortawesome/free-solid-svg-icons: Used for displaying icons.
-- @apollo/client: Used for fetching data from the GraphQL server.
+>- reactstrap: Used for various UI components.
+>- @heroicons/react
+>- react-error-boundary:used for error page
+>- react: The library this component is built with.
+>- react-dom
+>- @fortawesome/react-fontawesome and @fortawesome/free-solid-svg-icons: Used for displaying icons.
+>- @apollo/client: Used for fetching data from the GraphQL server.
+>- @apollo/datasource-rest:used to connect apollo server to rest API
+>- @apollo/server
+>- graphql: for querries
+>- graphql-tag
+>- graphql-type-json
 
 ## Additional Notes
 
