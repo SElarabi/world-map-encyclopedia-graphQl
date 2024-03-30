@@ -1,13 +1,13 @@
 <!-- @format -->
 
 # [world-map-encyclopedia-graphql](https://world-map-encyclopedia-graphql.vercel.app/dashboard)
-# <a href="https://world-map-encyclopedia-graphql.vercel.app/dashboard" target="_blank">world-map-encyclopedia-graphql</a>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 # Country Information Page
 
-This is a NextJs application that displays information about a selected country. The information is fetched from a GraphQL server using the Apollo Client.
+This Next.js application showcases details about a chosen country. 
+>The data is retrieved from a REST API: [REST COUNTRIES](https://restcountries.com) using GraphQL and Apollo.
 
 
 ## Components
