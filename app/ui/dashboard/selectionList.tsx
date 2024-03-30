@@ -4,6 +4,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { GET_COUNTRIES } from '@/app/lib/queries';
 import { SelectedCountryContext } from './selectedCountry';
+import Image from 'next/image';
 
 export function SelectionList() {
 	const { loading, error, data } = useQuery(GET_COUNTRIES);
@@ -91,8 +92,21 @@ export function SelectionList() {
 		);
 	};
 
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p className='text-slate-950'>Error : {error.message}</p>;
+	if (loading)
+		return (
+			<img
+				src='/Spinner.gif'
+				alt='loading ....'
+				width={150}
+				height={150}
+			></img>
+		);
+	if (error)
+		return (
+			<p className='text-slate-950'>
+				Error : {`⛔ NO DATABASE ⚡️ CONNECTION,🧑🏼‍💻 `}
+			</p>
+		);
 
 	return (
 		<div>

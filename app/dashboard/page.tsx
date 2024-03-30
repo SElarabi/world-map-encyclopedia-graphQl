@@ -6,6 +6,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHelmetUn } from '@fortawesome/free-solid-svg-icons';
 import { SelectedCountryContext } from '../ui/dashboard/selectedCountry';
+import { GET_COUNTRIES } from '@/app/lib/queries';
+import { useQuery, gql } from '@apollo/client';
 
 import Loading from './ loading';
 
@@ -16,7 +18,7 @@ export default function Page() {
 	const [isSmallViewport, setIsSmallViewport] = useState(
 		typeof window !== 'undefined' ? window.innerWidth <= 640 : false
 	);
-
+	const { loading, error } = useQuery(GET_COUNTRIES);
 	// window viewport
 	useEffect(() => {
 		const handleResize = () => {

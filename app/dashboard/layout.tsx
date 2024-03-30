@@ -6,6 +6,9 @@ import { SelectedCountryProvider } from '../ui/dashboard/selectedCountry';
 import { Suspense } from 'react';
 import Loading from './ loading';
 
+import Error from './error';
+import { ErrorBoundary } from 'react-error-boundary';
+
 export default function DashboardLayout({
 	children,
 }: {
@@ -18,9 +21,11 @@ export default function DashboardLayout({
 					<div className='w-full flex-none md:w-64 '>
 						<SideNav />
 					</div>
-					<Suspense fallback={<Loading />}>
-						<div className=' w-[100%]  p-2 mb-2'>{children}</div>
-					</Suspense>
+					<ErrorBoundary fallback={<Error />}>
+						<Suspense fallback={<Loading />}>
+							<div className=' w-[100%]  p-2 mb-2'>{children}</div>
+						</Suspense>
+					</ErrorBoundary>
 				</div>
 			</GraphQlClientProvider>
 		</SelectedCountryProvider>

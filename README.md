@@ -1,36 +1,60 @@
+<!-- @format -->
+
+# [world-map-encyclopedia-graphql] (https://world-map-encyclopedia-graphql.vercel.app/dashboard)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Country Information Page
 
-First, run the development server:
+This is a NextJs application that displays information about a selected country. The information is fetched from a GraphQL server using the Apollo Client.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Components
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The page consists of the following components:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Features:**
+   . Displays the official and common names of the selected country.
+   . Displays the national flag and coat of arms of the selected country.
+   . Displays various information about the selected country such as:
+   .Capital
+   .Population
+   .Languages
+   .Currencies
+   .Continent
+   .Subregion
+   .Provides a link to the country's location on Google Maps.
+   .Responsive design that adjusts to the viewport size.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Usage
 
-## Learn More
+To use this page:
 
-To learn more about Next.js, take a look at the following resources:
+1. Ensure you have the necessary dependencies installed (React, Reactstrap, FontAwesome, etc.).
+2. Include the provided React component in your project.
+3. Pass the selected country object and default country object to the component through context.
+4. The component will fetch additional country data using Apollo Client.
+5. Upon rendering, the component will display the information of the selected country.
+6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+7. You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Dependencies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- reactstrap: Used for various UI components.
+- react: The library this component is built with.
+- @fortawesome/react-fontawesome and @fortawesome/free-solid-svg-icons: Used for displaying icons.
+- @apollo/client: Used for fetching data from the GraphQL server.
 
-## Deploy on Vercel
+## Additional Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- The component adjusts its layout based on the viewport size, providing a responsive design.
+- It dynamically fetches country data and updates the displayed information when a new country is selected.
+- Various mappings are used to display languages, currencies, and native names.
+- page component uses the window object for some operations. If you're using server-side rendering, make sure to handle these cases properly as the window object is not available on the server.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+
+Feel free to contribute to this project by submitting bug reports, feature requests, or pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
