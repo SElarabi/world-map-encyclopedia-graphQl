@@ -36,13 +36,14 @@ The page consists of the following components:
  
 To use this project:
 
-1. Ensure you have the necessary dependencies installed (React, Reactstrap, FontAwesome, etc.).use `npm install` to install all dependencies listed in the package.json file.
-2. Include the provided React component in your project.
-3. Pass the selected country object and default country object to the component through context.
-4. The component will fetch additional country data using Apollo Client.
-5. Upon rendering, the component will display the information of the selected country.
-6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-7. You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Use `npm install` to install all dependencies listed in the package.json file.
+2. Ensure you have the necessary dependencies installed (React, Reactstrap, FontAwesome, etc.).
+3. Include the provided React component in your project.
+4. Pass the selected country object and default country object to the component through context.
+5. The component will fetch additional country data using Apollo Client.
+6. Upon rendering, the component will display the information of the selected country.
+7. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+8. You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Dependencies
 
